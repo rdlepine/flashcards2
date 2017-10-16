@@ -2,19 +2,20 @@ import { AsyncStorage } from 'react-native'
 export const DECKS_STORAGE_KEY = 'UdaciFlashCards:decks'
 
 
-export function submitEntry({entry, key}) {
+export function submitEntry({deck}) {
         return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify( {
+            [deck]: deck,
     }));
 }
 
-export function removeEntry() {
-    return AsyncStorage.getItem(DECKS_STORAGE_KEY)
-        .then( (results) => {
-            const data = JSON.parse(results);
-            data[key] = undefined;
-            AsyncStorage,setItem(DECKS_STORAGE_KEY, HSIB,stringify(data));
-        })
-}
+// export function removeEntry(key) {
+//     return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+//         .then( (results) => {
+//             const data = JSON.parse(results);
+//             data[key] = undefined;
+//             AsyncStorage,setItem(DECKS_STORAGE_KEY, HSIB,stringify(data));
+//         })
+// }
 
 export function addDeck(deck) {
     console.log(deck);

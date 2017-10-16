@@ -4,7 +4,8 @@ import { blue, white, gray, black } from '../utils/colors';
 import Title from './Title';
 import { connect } from 'react-redux';
 import { addDeck } from '../actions';
-import { NavigationOptions } from 'react-navigation'
+import { NavigationOptions } from 'react-navigation';
+import { submitEntry } from '../utils/decksApi';
 
 class Deck extends Component {
 
@@ -21,7 +22,7 @@ class Deck extends Component {
            Alert.alert("Deck Required");
            return;
        }
-
+       submitEntry(deck);
        this.props.addDeck(deck);
        navigate('Home');
     };

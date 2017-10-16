@@ -9,7 +9,9 @@ import { fetchDecks, delDecks } from '../actions';
 class Decks extends Component {
 
     componentDidMount() {
-    
+        const obj = fetchDecks();
+        if(obj !== undefined)
+        Alert.alert(obj.title);
     }
 
     state = {

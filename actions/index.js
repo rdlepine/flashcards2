@@ -14,7 +14,6 @@ export function addDeck(newDeck) {
 
 export function fetchDecks() {
     api.fetchDecks().then( (decks1) => {
- //       console.log("fetch", decks1)
         decks = {
             decks1
         }
