@@ -4,7 +4,7 @@ import { blue, white, gray, black } from '../utils/colors';
 import Title from './Title';
 import { connect } from 'react-redux';
 import { addDeck } from '../actions';
-import { NavigationOptions } from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
 import { submitEntry } from '../utils/decksApi';
 
 class Deck extends Component {
@@ -15,15 +15,20 @@ class Deck extends Component {
     
 
     addDeck = () => {
-       const { deck } = this.state;
-       const { navigate } = this.props.navigation;
+      const { deck } = this.state;
+      const { navigate } = this.props.navigation;
     
        if(deck.trim().length === 0) {
            Alert.alert("Deck Required");
            return;
        }
-       submitEntry(deck);
-       this.props.addDeck(deck);
+       const newDeck = {
+           [deck]: {
+               title: deck
+           }
+       }
+       submitEntry(newDeck);
+       this.props.addDeck(newDeck);
        navigate('Home');
     };
       
@@ -32,10 +37,11 @@ class Deck extends Component {
     }
 
     render() {
-
+        const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
                 <Title />
+                <Text style={{color: 'blue', fontSize: 16, marginBottom: 10}} onPress={() => navigate('Home')}>Home</Text>
                 <Text style={styles.label}>Deck Title</Text>
                 <TextInput id="deck" style={styles.input} onChangeText={(deck) => this.setState({deck})}  autoFocus={true} underlineColorAndroid="transparent"  placeholder="Type Here..." />
                 <TouchableOpacity style={styles.btn} onPress={this.addDeck.bind()}>

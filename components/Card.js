@@ -6,7 +6,16 @@ import { NavigationActions } from 'react-navigation';
 class Card extends Component {
 
     state = {
-        card: {}
+        question,
+        answer
+    }
+
+    componentDidMount() {
+
+    }
+
+    addQuestin(question, answer) {
+
     }
 
     render() {
@@ -15,17 +24,17 @@ class Card extends Component {
 
         return (
             <View style={styles.container}>
+                <Text style={{color: 'blue'}} onPress={() => navigate('Home')}>Home</Text>
                 <Text style={styles.headerLabel}>Quiz Questions</Text>
-
                 <Text style={styles.headerLabel}>Question</Text>
-                <TextInput style={styles.inputInput}  placeholder="Type Here..." />           
+                <TextInput style={styles.inputText}  placeholder="Type Here..." />           
                 <Text style={styles.headerLabel}>Answer</Text>
-                <TextInput style={styles.inputInput}  placeholder="Type Here..." />           
-                <TouchableOpacity style={styles.btn}>
-                    <Text onPress={() => navigate('Cards')}  style={styles.btnText}>Save</Text>
+                <TextInput style={styles.inputText}  placeholder="Type Here..." />           
+                <TouchableOpacity onPress={() => navigate('Cards')} style={styles.btn}>
+                    <Text style={styles.btnText}>Save</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btn}>
-                    <Text onPress={() => navigate('Cards')}  style={styles.btnText}>Cancel</Text>
+                <TouchableOpacity onPress={() => navigate('Cards')} style={styles.btn}>
+                    <Text style={styles.btnText}>Cancel</Text>
                 </TouchableOpacity>
             </View>
         );

@@ -15,7 +15,7 @@ class Title extends Component {
 
 const styles = StyleSheet.create( {
     container: {
-        marginBottom: 20
+        marginBottom: 10
     },
     title: {
         fontSize: 28,

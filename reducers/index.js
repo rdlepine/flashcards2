@@ -4,9 +4,9 @@ import { combineReducers } from 'redux';
 function decks(state = {}, action) {
     switch (action.type) {
         case c.GET_DECKS:
-            return state;
+             return JSON.parse(action.decks);
         case c.NEW_DECK:
-            return {...state, ...action.deck }  
+             return {...state, ...action.deck }  
         case c.DEL_DECKS:
              return {};
         default:

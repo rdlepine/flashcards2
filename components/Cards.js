@@ -11,9 +11,10 @@ class Cards extends Component {
 
         return (
             <View style={styles.container}>
+                <Text style={{color: 'blue', fontSize: 16, marginBottom: 10}} onPress={() => navigate('Home')}>Home</Text>
                 <Text style={styles.headerLabel}>Card Questions</Text>
-                <TouchableOpacity style={styles.btn}>
-                    <Text onPress={() => navigate('Card')}  style={styles.btnText}>Add Question</Text>
+                <TouchableOpacity onPress={() => navigate('Card')} style={styles.btn}>
+                    <Text style={styles.btnText}>Add Question</Text>
                 </TouchableOpacity>
                
             </View>
@@ -31,7 +32,8 @@ const styles = StyleSheet.create( {
         marginTop: 10
     },
     headerLabel: {
-        fontSize: 22
+        fontSize: 22,
+        marginBottom: 10
     },
     btn: {
         backgroundColor: blue,

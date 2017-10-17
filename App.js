@@ -6,10 +6,11 @@ import Cards from './components/Cards';
 import Card from './components/Card';
 import { Provider } from 'react-redux';
 import rootReducer from './reducers';
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { lightBlue, blue, white, gray } from './utils/colors';
 import { StackNavigator } from 'react-navigation';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
+import thunk from 'redux-thunk';
 
 
 const Stack = StackNavigator({
@@ -44,13 +45,13 @@ const Stack = StackNavigator({
       headerStyle: { marginTop: 10},
       headerTitleStyle: { fontSize: 22, fontWeight: '600', textAlign: 'center', marginTop: 10},
     },
-  }
+  }  
 })
 
 export default class App extends React.Component {
   render() {
     return (
-      <Provider store={createStore(rootReducer)}>
+      <Provider store={createStore(rootReducer, applyMiddleware(thunk))}>
         <Stack />
       </Provider>
     );

@@ -2,10 +2,9 @@ import { AsyncStorage } from 'react-native'
 export const DECKS_STORAGE_KEY = 'UdaciFlashCards:decks'
 
 
-export function submitEntry({deck}) {
-        return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify( {
-            [deck]: deck,
-    }));
+export function submitEntry(deck) {
+        
+        return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(deck));
 }
 
 // export function removeEntry(key) {
@@ -18,17 +17,32 @@ export function submitEntry({deck}) {
 // }
 
 export function addDeck(deck) {
-    console.log(deck);
     let newDeck = {
-        [deck]: deck
+       [deck]: deck
     }
 
- //  return AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(newDeck));
+    return AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(newDeck));
 }
 
-export function fetchDecks() {
-     return AsyncStorage.getItem(DECKS_STORAGE_KEY)
-           .then( (decks) => {
-                return decks;
-           });
+export function getDecks() {
+    return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+        .then( (decks) => {
+             if(decks) {
+                 return decks;
+            }
+            return "{}";
+        }).catch( (err) => {
+            console.log("ERR",err);
+        });
+}
+
+export function clearDecks(key) { 
+  
+
+    return AsyncStorage.removeItem(key)
+        .then( () => {
+             return {};
+        }).catch( (err) => {
+            console.log(err);
+        });
 }

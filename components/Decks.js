@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import {Text, View, ScrollView, TouchableOpacity, StyleSheet, Animated, Alert } from 'react-native';
-import { blue, white, gray, black, lightBlue } from '../utils/colors';
+import { blue, white, gray, black, lightBlue, mediumBlue } from '../utils/colors';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import Title from './Title';
-import { fetchDecks, delDecks } from '../actions';
+import { getDecks } from '../utils/decksApi';
+import { fetchDecks, clearDecks } from '../actions';
+import DECKS_STORAGE_KEY from '../utils/decksApi';
 
 class Decks extends Component {
 
     componentDidMount() {
-        const obj = fetchDecks();
-        if(obj !== undefined)
-        Alert.alert(obj.title);
+        this.props.dispatch(fetchDecks());
     }
 
     state = {
@@ -28,7 +28,7 @@ class Decks extends Component {
     }
 
     removeDecks = () => {
-       this.props.delDecks();
+          this.props.dispatch(clearDecks('UdaciFlashCards:decks'));
     }
 
 
@@ -114,13 +114,13 @@ const styles = StyleSheet.create( {
         backgroundColor: lightBlue,
         borderBottomColor: gray,
         borderRightColor: gray,
-        borderBottomWidth: 1.5,
-        borderRightWidth: 1.5,
+        borderBottomWidth: 2.5,
+        borderRightWidth: 2.5,
         width: 250,
         alignItems: 'center'
     },
     deckItem: {
-        fontSize: 28,
+        fontSize: 28
     },
     smallText: {
         fontSize: 10,
@@ -134,12 +134,5 @@ const mapStateToProps = (state) => {
     };
 };
    
-const mapDispatchToProps = (dispatch) => {
-     return {
-        fetchDecks: () => dispatch(fetchDecks()),
-        delDecks: () => dispatch(delDecks())
-    };
- };
-   
- export default connect(mapStateToProps,mapDispatchToProps)(Decks);
+ export default connect(mapStateToProps)(Decks);
 
