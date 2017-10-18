@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import Title from './Title';
 import { getDecks } from '../utils/decksApi';
-import { fetchDecks, clearDecks } from '../actions';
+import { fetchDecks, clearDecks, getDeckCard, setCardKey } from '../actions';
 import DECKS_STORAGE_KEY from '../utils/decksApi';
 
 class Decks extends Component {
@@ -31,6 +31,11 @@ class Decks extends Component {
           this.props.dispatch(clearDecks('UdaciFlashCards:decks'));
     }
 
+    getCard = (deck, event) => {  
+        const { navigate } = this.props.navigation;
+        this.props.dispatch(setCardKey(deck));
+        navigate('Card');
+    }    
 
     render() {
         const { navigate } = this.props.navigation;
@@ -49,7 +54,7 @@ class Decks extends Component {
                     {this.props.decks !== undefined && Object.keys(this.props.decks).length > 0
                         ?
                             Object.keys(this.props.decks).map( (deck, key) => (
-                            <TouchableOpacity key={key} onPress={() => navigate('Cards')}>    
+                            <TouchableOpacity key={key} onPress={this.getCard.bind(this, deck)}>    
                                 <View style={styles.deck}>
                                     <Text style={[styles.deckItem]}>{deck}</Text>
                                     <Text>{this.props.decks[deck].cards === undefined?0:this.props.decks[deck].cards.length} Cards</Text>

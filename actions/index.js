@@ -41,3 +41,31 @@ export function delDecks() {
         type: c.DEL_DECKS,
     }
 }
+
+export function addQuestion(key, question) {
+
+}
+
+export function setCard(card) {
+    return {
+        type: c.SET_CARD,
+        card
+    }
+}
+
+export function getDeckCard(deck) {
+     return (dispatch) => {
+        api.getCard(deck).then( (card) => {
+              dispatch(setCard(card));
+            }).catch((err) => {
+                console.log("ERR", err);
+            });
+       }
+}
+
+export function setCardKey(key) {
+    return {
+        type: c.SET_CARD_KEY,
+        key
+    }
+}

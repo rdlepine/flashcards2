@@ -7,15 +7,6 @@ export function submitEntry(deck) {
         return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(deck));
 }
 
-// export function removeEntry(key) {
-//     return AsyncStorage.getItem(DECKS_STORAGE_KEY)
-//         .then( (results) => {
-//             const data = JSON.parse(results);
-//             data[key] = undefined;
-//             AsyncStorage,setItem(DECKS_STORAGE_KEY, HSIB,stringify(data));
-//         })
-// }
-
 export function addDeck(deck) {
     let newDeck = {
        [deck]: deck
@@ -37,12 +28,27 @@ export function getDecks() {
 }
 
 export function clearDecks(key) { 
-  
-
     return AsyncStorage.removeItem(key)
         .then( () => {
              return {};
         }).catch( (err) => {
             console.log(err);
         });
+}
+
+export function getCard(key) {
+     return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+        .then( (card) => {
+            if(card) {
+                let carData = JSON.parse(card);
+                letCardDetails = carData[key];
+                let obj = {
+                    [key]: letCardDetails
+                };
+                return obj;
+            }
+            return "{}";
+        }).catch( (err) => {
+            console.log("ERR",err);
+    });
 }

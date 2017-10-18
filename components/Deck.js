@@ -43,7 +43,7 @@ class Deck extends Component {
                 <Title />
                 <Text style={{color: 'blue', fontSize: 16, marginBottom: 10}} onPress={() => navigate('Home')}>Home</Text>
                 <Text style={styles.label}>Deck Title</Text>
-                <TextInput id="deck" style={styles.input} onChangeText={(deck) => this.setState({deck})}  autoFocus={true} underlineColorAndroid="transparent"  placeholder="Type Here..." />
+                <TextInput style={styles.input} onChangeText={(deck) => this.setState({deck})} autoFocus={true} underlineColorAndroid="transparent"  placeholder="Type Here..." />
                 <TouchableOpacity style={styles.btn} onPress={this.addDeck.bind()}>
                    <Text style={styles.btnText} >Add Deck</Text>
                 </TouchableOpacity>
