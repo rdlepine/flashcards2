@@ -43,7 +43,14 @@ export function delDecks() {
 }
 
 export function addQuestion(key, question) {
-
+ 
+    return (dispatch) => {
+        api.addQuestion(key, question).then( (card) => {
+               dispatch(setCard(card));
+            }).catch((err) => {
+                console.log("ERR", err);
+            });
+       }
 }
 
 export function setCard(card) {

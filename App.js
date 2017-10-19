@@ -4,6 +4,7 @@ import Decks from './components/Decks';
 import Deck from './components/Deck';
 import Cards from './components/Cards';
 import Card from './components/Card';
+import Quiz from './components/Quiz';
 import { Provider } from 'react-redux';
 import rootReducer from './reducers';
 import { createStore, applyMiddleware } from 'redux'
@@ -45,7 +46,15 @@ const Stack = StackNavigator({
       headerStyle: { marginTop: 10},
       headerTitleStyle: { fontSize: 22, fontWeight: '600', textAlign: 'center', marginTop: 10},
     },
-  }  
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      title: "Quiz",
+      headerStyle: { marginTop: 10},
+      headerTitleStyle: { fontSize: 22, fontWeight: '600', textAlign: 'center', marginTop: 10},
+    },
+  }   
 })
 
 export default class App extends React.Component {

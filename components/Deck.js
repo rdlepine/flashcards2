@@ -40,7 +40,6 @@ class Deck extends Component {
         const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
-                <Title />
                 <Text style={{color: 'blue', fontSize: 16, marginBottom: 10}} onPress={() => navigate('Home')}>Home</Text>
                 <Text style={styles.label}>Deck Title</Text>
                 <TextInput style={styles.input} onChangeText={(deck) => this.setState({deck})} autoFocus={true} underlineColorAndroid="transparent"  placeholder="Type Here..." />
@@ -77,7 +76,7 @@ const styles = StyleSheet.create( {
       
     },
     label: {
-        fontSize: 22
+        fontSize: 28
     },
     input: {
         fontSize: 22,

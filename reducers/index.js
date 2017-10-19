@@ -17,11 +17,11 @@ function decks(state = {}, action) {
 function card(state = {}, action) {
     switch (action.type) {
         case c.SET_CARD:
-        //    console.log("REDUCER CARD",action.card);
+   //         console.log("REDUCER CARD",action.card);
             return action.card;
         case c.GET_CARD:
-            return action.card;        
-        default:
+            return action.card; 
+         default:
             return state;
     }
 }

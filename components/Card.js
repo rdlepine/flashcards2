@@ -3,7 +3,7 @@ import {Text,TextInput, View, ScrollView, TouchableOpacity, StyleSheet, Alert } 
 import { blue, white, gray, black } from '../utils/colors';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
-import { getDeckCard } from '../actions';
+import { getDeckCard, addQuestion } from '../actions';
 
 class Card extends Component {
 
@@ -18,35 +18,33 @@ class Card extends Component {
     }
 
     componentDidMount() {
+        console.log('in');
        const cardKey = this.props.cardKey;
        this.props.dispatch(getDeckCard(cardKey));
     }
 
     addQuestion =  () => {
         const {question, answer } = this.state;
-
+        const cardKey = this.props.cardKey;
+        const { navigate } = this.props.navigation;  
+        
         let QnA = {
             question: question,
             answer: answer
         };
-        
-        this.props.dispatch(AddQuestion(this.props.key, QnA));
-        
+        this.props.dispatch(addQuestion(cardKey, QnA));    
+        navigate('Cards'); 
     };
 
     render() {
         const {question, answer } = this.state;
         const { navigate } = this.props.navigation;
-        const { card } = this.props;
+        const { card, cardKey } = this.props;
 
-        let cardKey = Object.keys(card);
-
-         
         return (
             <View style={styles.container}>
                 <Text style={{color: 'blue'}} onPress={() => navigate('Home')}>Home</Text>
-                <Text style={styles.headerLabel}>Quiz Questions</Text>
-                <Text style={styles.smallLabel}>[ {cardKey} ]</Text>
+                <Text style={styles.headerLabel}>{cardKey}</Text>
                 <Text style={styles.headerLabel}>Question</Text>
                 <TextInput style={styles.inputText} onChangeText={(question) => this.setState({question})} placeholder="Type Here..." underlineColorAndroid="transparent" />           
                 <Text style={styles.headerLabel}>Answer</Text>

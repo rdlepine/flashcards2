@@ -34,7 +34,7 @@ class Decks extends Component {
     getCard = (deck, event) => {  
         const { navigate } = this.props.navigation;
         this.props.dispatch(setCardKey(deck));
-        navigate('Card');
+        navigate('Cards');
     }    
 
     render() {
@@ -54,14 +54,14 @@ class Decks extends Component {
                     {this.props.decks !== undefined && Object.keys(this.props.decks).length > 0
                         ?
                             Object.keys(this.props.decks).map( (deck, key) => (
-                            <TouchableOpacity key={key} onPress={this.getCard.bind(this, deck)}>    
-                                <View style={styles.deck}>
-                                    <Text style={[styles.deckItem]}>{deck}</Text>
-                                    <Text>{this.props.decks[deck].cards === undefined?0:this.props.decks[deck].cards.length} Cards</Text>
-                                    <Text style={styles.smallText}>Click to add Card to deck</Text>
-                                </View>
-                            </TouchableOpacity>
-                            ))      
+                                <TouchableOpacity key={key} onPress={this.getCard.bind(this, deck)}>    
+                                    <View style={styles.deck}>
+                                        <Text style={[styles.deckItem]}>{deck}</Text>
+                                        <Text>{this.props.decks[deck].questions === undefined?0:this.props.decks[deck].questions.length} Card(s)</Text>
+                                        <Text style={styles.smallText}>Click to add Card to deck</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                ))      
                         : 
                             <View>
                                 <Text>{Object.keys(this.props.decks).length} Cards</Text>
@@ -125,7 +125,7 @@ const styles = StyleSheet.create( {
         alignItems: 'center'
     },
     deckItem: {
-        fontSize: 28
+        fontSize: 18
     },
     smallText: {
         fontSize: 10,

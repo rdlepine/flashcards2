@@ -40,8 +40,8 @@ export function getCard(key) {
      return AsyncStorage.getItem(DECKS_STORAGE_KEY)
         .then( (card) => {
             if(card) {
-                let carData = JSON.parse(card);
-                letCardDetails = carData[key];
+                let cardData = JSON.parse(card);
+                letCardDetails = cardData[key];
                 let obj = {
                     [key]: letCardDetails
                 };
@@ -51,4 +51,25 @@ export function getCard(key) {
         }).catch( (err) => {
             console.log("ERR",err);
     });
+}
+
+export function addQuestion(key, question) {
+    return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+       .then( (cards) => {
+           if(cards) {
+               let cardData = JSON.parse(cards);
+               let cardDetails = cardData[key];
+               if(cardDetails.questions === undefined) {
+                   cardDetails.questions = [];
+               }
+               cardDetails.questions.push(question);
+               let obj = {
+                   [key]: cardDetails
+               };
+                return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(obj))
+             }
+           return "{}";
+       }).catch( (err) => {
+           console.log("ERR",err);
+   });
 }

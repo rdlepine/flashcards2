@@ -4,4 +4,5 @@ export const GET_DECKS = 'GET_DECKS';
 export const GET_CARD = 'GET_CARD';
 export const DEL_DECKS = 'DEL_DECKS';
 export const SET_CARD = 'SET_CARD';
-export const SET_CARD_KEY = "SET_CARD_KEY";
+export const SET_CARD_KEY = 'SET_CARD_KEY';
+export const ADD_CARD_QUESTION = 'ADD_CARD_QUESTION';
