@@ -44,8 +44,8 @@ export function delDecks() {
 
 export function addQuestion(key, question) {
      return (dispatch) => {
-        api.addQuestion(key, question).then( () => {
-               dispatch(fetchDecks());
+        api.addQuestion(key, question).then( (card) => {
+               dispatch(setCard(card));
             }).catch((err) => {
                 console.log("ERR 2", err);
             });
@@ -62,7 +62,7 @@ export function setCard(card) {
 export function getDeckCard(deck) {
      return (dispatch) => {
         api.getCard(deck).then( (card) => {
-              dispatch(setCard(card));
+               dispatch(setCard(card));
             }).catch((err) => {
                 console.log("ERR 3", err);
             });

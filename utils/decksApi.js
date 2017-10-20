@@ -3,7 +3,7 @@ export const DECKS_STORAGE_KEY = 'UdaciFlashCards:decks'
 
 
 export function submitEntry(deck) {
-        
+        console.log(deck);
         return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(deck));
 }
 
@@ -66,8 +66,8 @@ export function addQuestion(key, question) {
                let obj = {
                    [key]: cardDetails
                };
-              return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(obj));   
-              
+               AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(obj));
+               return obj;
              }
            return "{}";
        }).catch( (err) => {
