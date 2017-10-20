@@ -21,7 +21,7 @@ export function fetchDecks() {
          api.getDecks().then( (decks) => {
                  dispatch(setDecks(decks));
              }).catch((err) => {
-                 console.log("ERR", err);
+                 console.log("ERR 1", err);
              });
         }
 }
@@ -43,12 +43,11 @@ export function delDecks() {
 }
 
 export function addQuestion(key, question) {
- 
-    return (dispatch) => {
-        api.addQuestion(key, question).then( (card) => {
-               dispatch(setCard(card));
+     return (dispatch) => {
+        api.addQuestion(key, question).then( () => {
+               dispatch(fetchDecks());
             }).catch((err) => {
-                console.log("ERR", err);
+                console.log("ERR 2", err);
             });
        }
 }
@@ -65,7 +64,7 @@ export function getDeckCard(deck) {
         api.getCard(deck).then( (card) => {
               dispatch(setCard(card));
             }).catch((err) => {
-                console.log("ERR", err);
+                console.log("ERR 3", err);
             });
        }
 }

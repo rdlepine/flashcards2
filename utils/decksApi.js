@@ -23,7 +23,7 @@ export function getDecks() {
             }
             return "{}";
         }).catch( (err) => {
-            console.log("ERR",err);
+            console.log("ERR1",err);
         });
 }
 
@@ -49,7 +49,7 @@ export function getCard(key) {
             }
             return "{}";
         }).catch( (err) => {
-            console.log("ERR",err);
+            console.log("ERR2",err);
     });
 }
 
@@ -66,10 +66,11 @@ export function addQuestion(key, question) {
                let obj = {
                    [key]: cardDetails
                };
-                return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(obj))
+              return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(obj));   
+              
              }
            return "{}";
        }).catch( (err) => {
-           console.log("ERR",err);
+           console.log("ERR3",err);
    });
 }

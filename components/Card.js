@@ -18,7 +18,6 @@ class Card extends Component {
     }
 
     componentDidMount() {
-        console.log('in');
        const cardKey = this.props.cardKey;
        this.props.dispatch(getDeckCard(cardKey));
     }
