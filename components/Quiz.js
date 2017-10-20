@@ -4,6 +4,8 @@ import { blue, white, gray, black, lightBlue, mediumBlue, red, green } from '../
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { getDeckCard } from '../actions';
+import * as utils from '../utils/routines';
+import { setLastQuizCompleteTime } from '../utils/decksApi';
 
 class Quiz extends Component {
     constructor() {
@@ -12,7 +14,8 @@ class Quiz extends Component {
         this.state = {
             quizQuestion: 0,
             correctAnswers: 0,
-            qora: true
+            qora: true,
+            score: ''
         }
 
     }
@@ -32,21 +35,34 @@ class Quiz extends Component {
        this.props.dispatch(getDeckCard(cardKey));
     }
 
+    getScore = (a, b, event) => {
+        const score = Math.floor((a / b) * 100);  
+        const strScore = `${score}%`;
+
+        const dt = utils.formatDate(new Date());
+        setLastQuizCompleteTime(dt);
+
+        return strScore;
+    }
+
     render() {
         const { navigate } = this.props.navigation;
         const { cardKey, card } = this.props;
-        const { quizQuestion, qora, correctAnswers } = this.state;
+        const { quizQuestion, qora, correctAnswers, score } = this.state;
     
         let quizLength = 0;
+        let title = '';
         if(card !== undefined && card[cardKey] !== undefined) {
             quizLength = card[cardKey].questions.length;
+            title = card[cardKey].title;
         }
 
+   
         return (
             <View style={styles.container}>
-                <Text style={{color: 'blue'}} onPress={() => navigate('Home')}>Home</Text>
+                <Text style={{color: 'blue', fontSize: 22}} onPress={() => navigate('Home')}>Home</Text>
                 <Text style={styles.headerLabel}>Quiz</Text>
-                <Text style={styles.headerLabel}>Deck {cardKey}</Text>
+                <Text style={styles.headerLabel}>Deck {title}</Text>
                 {quizQuestion < quizLength?
                     <View style={styles.container}>
                         <Text style={styles.headerLabel}>Question {quizQuestion + 1} of {quizLength}</Text>
@@ -63,10 +79,13 @@ class Quiz extends Component {
                      </View>
                 :
                     <View style={styles.container}>
-                        <Text style={{fontSize: 32}}>{correctAnswers} of {quizLength } Correct</Text>
+                        <Text style={{fontSize: 32}}>{correctAnswers} of {quizLength } Correct {this.getScore(correctAnswers, quizLength)}</Text>
                         <Text style={correctAnswers === quizLength?styles.goodJob:styles.studyMore}>{correctAnswers === quizLength?'Good Job!':'Need to Study!'}</Text>
                         <TouchableOpacity style={styles.btn} onPress={() => {this.setState({quizQuestion: 0, correctAnswers: 0})}}>
                             <Text style={styles.btnText}>Re-Start Quiz</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.btn} onPress={() => navigate('Cards')}>
+                            <Text style={styles.btnText}>Back</Text>
                         </TouchableOpacity>
                     </View>
                 }

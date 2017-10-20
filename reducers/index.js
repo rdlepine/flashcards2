@@ -17,7 +17,6 @@ function decks(state = {}, action) {
 function card(state = {}, action) {
     switch (action.type) {
         case c.SET_CARD:
-   //         console.log("REDUCER CARD",action.card);
             return action.card;
         case c.GET_CARD:
             return action.card; 
@@ -35,10 +34,20 @@ function cardKey(state = '', action) {
     }    
 }
 
+function quizStatus(state = {}, action) {
+    switch(action.type) {
+        case c.SET_QUIZ_STATUS:
+            return action.status
+        default:
+            return state;
+    }    
+}
+
 const rootReducer = combineReducers( {
     decks,
     card,
-    cardKey
+    cardKey, 
+    quizStatus
 }); 
 
-export default rootReducer;
+export default rootReducer; 

@@ -1,10 +1,29 @@
 import { AsyncStorage } from 'react-native'
 export const DECKS_STORAGE_KEY = 'UdaciFlashCards:decks'
+export const STATUS_STORAGE_KEY = 'UdaciFlashCards:status'
+export function setLastQuizCompleteTime(dt) {
+    let lastQuizTime = {
+        lastQuiz: {
+            time: dt
+        }
+    }
+    return AsyncStorage.mergeItem(STATUS_STORAGE_KEY, JSON.stringify(lastQuizTime));
+}
 
+export function getQuizStatus() {
+    return AsyncStorage.getItem(STATUS_STORAGE_KEY)
+    .then( (status) => {
+         if(status) {
+             return JSON.parse(status);
+        }
+        return "{}";
+    }).catch( (err) => {
+        console.log("ERR1",err);
+    });
+}
 
 export function submitEntry(deck) {
-        console.log(deck);
-        return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(deck));
+     return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(deck));
 }
 
 export function addDeck(deck) {
@@ -52,25 +71,26 @@ export function getCard(key) {
             console.log("ERR2",err);
     });
 }
-
+ 
 export function addQuestion(key, question) {
     return AsyncStorage.getItem(DECKS_STORAGE_KEY)
        .then( (cards) => {
            if(cards) {
                let cardData = JSON.parse(cards);
                let cardDetails = cardData[key];
-               if(cardDetails.questions === undefined) {
+               if(cardDetails === undefined || cardDetails.questions === undefined) {
                    cardDetails.questions = [];
                }
                cardDetails.questions.push(question);
                let obj = {
                    [key]: cardDetails
                };
-               AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(obj));
-               return obj;
+               return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(obj));
+              
              }
            return "{}";
        }).catch( (err) => {
            console.log("ERR3",err);
    });
 }
+ 

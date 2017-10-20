@@ -3,9 +3,10 @@ import {Text, TextInput, View, TouchableOpacity, StyleSheet, Alert } from 'react
 import { blue, white, gray, black } from '../utils/colors';
 import Title from './Title';
 import { connect } from 'react-redux';
-import { addDeck } from '../actions';
+import { addDeck, setCardKey } from '../actions';
 import { NavigationActions } from 'react-navigation';
 import { submitEntry } from '../utils/decksApi';
+import * as utils from '../utils/routines';
 
 class Deck extends Component {
 
@@ -22,15 +23,18 @@ class Deck extends Component {
            Alert.alert("Deck Required");
            return;
        }
+
+       let key = utils.escapeRegExp(deck);
        const newDeck = {
-           [deck]: {
+           [key]: {
                title: deck
            }
        }
        submitEntry(newDeck);
-       this.props.addDeck(newDeck);
-       navigate('Home');
-    };
+       this.props.dispatch(addDeck(newDeck));
+       this.props.dispatch(setCardKey(utils.escapeRegExp(deck)));
+       navigate('Cards');
+     };
       
     getCards() {
 
@@ -92,11 +96,5 @@ const mapStateToProps = (state) => {
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-       addDeck: (deck) => dispatch(addDeck(deck)),
-       getDeck: () => dispatch(getDeck())
-   };
-};
   
-export default connect(mapStateToProps,mapDispatchToProps)(Deck);
+export default connect(mapStateToProps)(Deck);

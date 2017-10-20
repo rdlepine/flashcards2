@@ -18,7 +18,7 @@ class Card extends Component {
     }
 
     componentDidMount() {
-       const cardKey = this.props.cardKey;
+       const cardKey = this.props.cardKey;    
        this.props.dispatch(getDeckCard(cardKey));
     }
 
@@ -42,8 +42,8 @@ class Card extends Component {
 
         return (
             <View style={styles.container}>
-                <Text style={{color: 'blue'}} onPress={() => navigate('Home')}>Home</Text>
-                <Text style={styles.headerLabel}>{cardKey}</Text>
+                <Text style={{color: 'blue', fontSize: 22}} onPress={() => navigate('Home')}>Home</Text>
+                <Text style={styles.headerLabel}>{card.title}</Text>
                 <Text style={styles.headerLabel}>Question</Text>
                 <TextInput style={styles.inputText} onChangeText={(question) => this.setState({question})} placeholder="Type Here..." underlineColorAndroid="transparent" />           
                 <Text style={styles.headerLabel}>Answer</Text>
@@ -51,10 +51,7 @@ class Card extends Component {
                 <TouchableOpacity onPress={this.addQuestion.bind()} style={styles.btn}>
                     <Text style={styles.btnText}>Save</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigate('Cards')} style={styles.btn}>
-                    <Text style={styles.btnText}>Cancel</Text>
-                </TouchableOpacity>
-            </View>
+           </View>
         );
     }
 

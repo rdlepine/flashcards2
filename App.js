@@ -12,6 +12,7 @@ import { lightBlue, blue, white, gray } from './utils/colors';
 import { StackNavigator } from 'react-navigation';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 import thunk from 'redux-thunk';
+import { setLocalNotification, clearNotifications} from './utils/notifications';
 
 
 const Stack = StackNavigator({
@@ -58,6 +59,12 @@ const Stack = StackNavigator({
 })
 
 export default class App extends React.Component {
+
+  componentDidMount() {
+    clearNotifications();
+    setLocalNotification();
+  }
+
   render() {
     return (
       <Provider store={createStore(rootReducer, applyMiddleware(thunk))}>

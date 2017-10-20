@@ -6,3 +6,4 @@ export const DEL_DECKS = 'DEL_DECKS';
 export const SET_CARD = 'SET_CARD';
 export const SET_CARD_KEY = 'SET_CARD_KEY';
 export const ADD_CARD_QUESTION = 'ADD_CARD_QUESTION';
+export const SET_QUIZ_STATUS = 'SET_QUIZ_STATUS';

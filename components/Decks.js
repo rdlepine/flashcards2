@@ -5,13 +5,14 @@ import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import Title from './Title';
 import { getDecks } from '../utils/decksApi';
-import { fetchDecks, clearDecks, getDeckCard, setCardKey } from '../actions';
+import { fetchDecks, clearDecks, getDeckCard, setCardKey, getQuizStatus } from '../actions';
 import DECKS_STORAGE_KEY from '../utils/decksApi';
 
 class Decks extends Component {
 
     componentDidMount() {
         this.props.dispatch(fetchDecks());
+        this.props.dispatch(getQuizStatus());
     }
 
     state = {
@@ -36,27 +37,34 @@ class Decks extends Component {
         this.props.dispatch(setCardKey(deck));
         navigate('Cards');
     }    
-
+ 
     render() {
         const { navigate } = this.props.navigation;
         const { opacity } = this.state;
+        
+        let lastQuiz = '';
+        if(this.props.quizStatus["lastQuiz"] !== undefined) {
+              lastQuiz = this.props.quizStatus["lastQuiz"].time;
+        } else {
+             lastQuiz = 'No quizes taken';
+         }
+    
 
-        return (
+        return ( 
             <View style={styles.container}>
                 <Title />
-                <TouchableOpacity style={styles.btnSmall} onPress={this.resetDeck.bind()} style={styles.btnSmall}>
-                    <Text style={styles.btnTextSmall} >Reset Deck</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigate('Deck')} style={styles.btn}>
+                 <Text style={{color: 'blue', fontSize: 18, marginBottom: 15}} onPress={this.resetDeck.bind()} >Reset Deck</Text>
+                 <TouchableOpacity onPress={() => navigate('Deck')} style={styles.btn}>
                     <Text style={styles.btnText} >Create New Deck</Text>
                 </TouchableOpacity>
-                <ScrollView >           
+                <Text style={{marginBottom: 15}}>Last Quiz Taken: {lastQuiz}</Text>
+                 <ScrollView >           
                     {this.props.decks !== undefined && Object.keys(this.props.decks).length > 0
                         ?
                             Object.keys(this.props.decks).map( (deck, key) => (
                                 <TouchableOpacity key={key} onPress={this.getCard.bind(this, deck)}>    
                                     <View style={styles.deck}>
-                                        <Text style={[styles.deckItem]}>{deck}</Text>
+                                        <Text style={[styles.deckItem]}>{this.props.decks[deck].title}</Text>
                                         <Text>{this.props.decks[deck].questions === undefined?0:this.props.decks[deck].questions.length} Card(s)</Text>
                                         <Text style={styles.smallText}>Click to add Card to deck</Text>
                                     </View>
@@ -92,7 +100,7 @@ const styles = StyleSheet.create( {
         width: 200,
         height: 40,
         borderRadius: 100,
-        marginBottom: 20
+        marginBottom: 15
     },
     btnSmall: {
         backgroundColor: blue,
@@ -102,7 +110,7 @@ const styles = StyleSheet.create( {
         marginBottom: 10
     },
     btnText: {
-        alignSelf: 'center',
+        alignSelf: 'center', 
         color: white,
         fontSize: 22,
         paddingTop: 3
@@ -135,7 +143,8 @@ const styles = StyleSheet.create( {
 
 const mapStateToProps = (state) => {
     return {
-        decks: state.decks
+        decks: state.decks,
+        quizStatus: state.quizStatus
     };
 };
    

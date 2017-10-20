@@ -22,17 +22,33 @@ class Cards extends Component {
         navigate('Quiz');
     } 
 
-
+    getCardCount = () => {
+        const { cardKey, card } = this.props;
+        if(card === undefined ||
+          card[cardKey] === undefined ||
+          card[cardKey].questions == undefined
+        ) {
+            return 0;
+        }
+        else {
+            return card[cardKey].questions.length;
+        }
+    }
+   
     render() {
 
         const { navigate } = this.props.navigation;
         const { cardKey, card } = this.props;
+        let title = '';
+        if(card[cardKey] !==  undefined) {
+            title = card[cardKey].title;
+        }
 
         return (
             <View style={styles.container}>
-                <Text style={{color: 'blue', fontSize: 16, marginBottom: 10}} onPress={() => navigate('Home')}>Home</Text>
-                <Text style={styles.headerLabel}>{cardKey}</Text>
-                <Text style={{marginBottom: 20, fontSize: 22}}>{card[cardKey] === undefined || card[cardKey].questions === undefined?0:card[cardKey].questions.length} Card(s)</Text>
+                <Text style={{color: 'blue', fontSize: 22, marginBottom: 10}} onPress={() => navigate('Home')}>Home</Text>
+                <Text style={styles.headerLabel}>{title}</Text>
+                <Text style={{marginBottom: 20, fontSize: 22}}>{this.getCardCount()} Card(s)</Text>
                 <TouchableOpacity onPress={() => navigate('Card')} style={styles.btn}>
                     <Text style={styles.btnText}>Add Card</Text>
                 </TouchableOpacity>

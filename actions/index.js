@@ -44,8 +44,8 @@ export function delDecks() {
 
 export function addQuestion(key, question) {
      return (dispatch) => {
-        api.addQuestion(key, question).then( (card) => {
-               dispatch(setCard(card));
+        api.addQuestion(key, question).then( () => {
+               dispatch(getDeckCard(key));
             }).catch((err) => {
                 console.log("ERR 2", err);
             });
@@ -74,4 +74,22 @@ export function setCardKey(key) {
         type: c.SET_CARD_KEY,
         key
     }
+}
+
+export function setStatus(status) {
+    return {
+        type: c.SET_QUIZ_STATUS,
+        status
+    }
+}
+
+
+export function getQuizStatus() {
+    return (dispatch) => {
+        api.getQuizStatus().then( (status) => {
+               dispatch(setStatus(status));
+            }).catch((err) => {
+                console.log("ERR 3", err);
+            });
+       }
 }
