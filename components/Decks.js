@@ -17,7 +17,7 @@ class Decks extends Component {
     }
 
     state = {
-        opacity: new Animated.Value(0)
+        bounceValue: new Animated.Value(1)
     }
 
     resetDeck = () => {
@@ -34,6 +34,11 @@ class Decks extends Component {
     }
 
     getCard = (deck, event) => {  
+        const { bounceValue } = this.state;
+        Animated.sequence([
+            Animated.timing(bounceValue, { duration: 500, toValue: 1.5}),
+            Animated.spring(bounceValue, { toValue: 1, friction: 84})
+        ]).start()
         const { navigate } = this.props.navigation;
         this.props.dispatch(setCardKey(deck));
         navigate('Cards');
@@ -41,7 +46,7 @@ class Decks extends Component {
  
     render() {
         const { navigate } = this.props.navigation;
-        const { opacity } = this.state;
+        const { opacity, bounceValue } = this.state;
         
         let lastQuiz = '';
         if(this.props.quizStatus["lastQuiz"] !== undefined) {
@@ -64,11 +69,14 @@ class Decks extends Component {
                         ?
                             Object.keys(this.props.decks).map( (deck, key) => (
                                 <TouchableOpacity key={key} onPress={this.getCard.bind(this, deck)}>    
-                                    <View style={[styles.deck]}>
-                                        <Text style={[styles.deckItem]}>{this.props.decks[deck].title}</Text>
+                                    <Animated.View style={[styles.deck,  {transform: [{scale: bounceValue}]}]}>
+                                        <Text 
+                                                style={[styles.deckItem]}>
+                                                {this.props.decks[deck].title}
+                                        </Text>
                                         <Text>{this.props.decks[deck].questions === undefined?0:this.props.decks[deck].questions.length} Card(s)</Text>
                                         <Text style={styles.smallText}>Click to add Card to deck</Text>
-                                    </View>
+                                    </Animated.View>
                                 </TouchableOpacity>
                                 ))      
                         : 
