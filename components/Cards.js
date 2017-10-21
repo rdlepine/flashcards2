@@ -23,14 +23,14 @@ class Cards extends Component {
     } 
 
     getCardCount = () => {
+        
         const { cardKey, card } = this.props;
         if(card === undefined ||
           card[cardKey] === undefined ||
           card[cardKey].questions == undefined
         ) {
             return 0;
-        }
-        else {
+        } else {
             return card[cardKey].questions.length;
         }
     }
@@ -40,6 +40,7 @@ class Cards extends Component {
         const { navigate } = this.props.navigation;
         const { cardKey, card } = this.props;
         let title = '';
+        let count = 0;
         if(card[cardKey] !==  undefined) {
             title = card[cardKey].title;
         }

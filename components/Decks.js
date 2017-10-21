@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Text, View, ScrollView, TouchableOpacity, StyleSheet, Animated, Alert } from 'react-native';
+import {Text, View, ScrollView, TouchableOpacity, StyleSheet, Animated, Easing, Alert } from 'react-native';
 import { blue, white, gray, black, lightBlue, mediumBlue } from '../utils/colors';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
@@ -13,6 +13,7 @@ class Decks extends Component {
     componentDidMount() {
         this.props.dispatch(fetchDecks());
         this.props.dispatch(getQuizStatus());
+        
     }
 
     state = {
@@ -63,7 +64,7 @@ class Decks extends Component {
                         ?
                             Object.keys(this.props.decks).map( (deck, key) => (
                                 <TouchableOpacity key={key} onPress={this.getCard.bind(this, deck)}>    
-                                    <View style={styles.deck}>
+                                    <View style={[styles.deck]}>
                                         <Text style={[styles.deckItem]}>{this.props.decks[deck].title}</Text>
                                         <Text>{this.props.decks[deck].questions === undefined?0:this.props.decks[deck].questions.length} Card(s)</Text>
                                         <Text style={styles.smallText}>Click to add Card to deck</Text>

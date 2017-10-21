@@ -27,7 +27,8 @@ class Deck extends Component {
        let key = utils.escapeRegExp(deck);
        const newDeck = {
            [key]: {
-               title: deck
+               title: deck,
+               questions:  []
            }
        }
        submitEntry(newDeck);

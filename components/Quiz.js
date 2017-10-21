@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { getDeckCard } from '../actions';
 import * as utils from '../utils/routines';
 import { setLastQuizCompleteTime } from '../utils/decksApi';
+import { clearNotifications, setLocalNotification, getDailyReminderValue } from '../utils/notifications';
+
 
 class Quiz extends Component {
     constructor() {
@@ -41,7 +43,8 @@ class Quiz extends Component {
 
         const dt = utils.formatDate(new Date());
         setLastQuizCompleteTime(dt);
-
+        //Reset Notifcation completed a quiz
+        clearNotifications().then(setLocalNotification);
         return strScore;
     }
 
@@ -79,7 +82,7 @@ class Quiz extends Component {
                      </View>
                 :
                     <View style={styles.container}>
-                        <Text style={{fontSize: 32}}>{correctAnswers} of {quizLength } Correct {this.getScore(correctAnswers, quizLength)}</Text>
+                        <Text style={{fontSize: 26}}>{correctAnswers} of {quizLength } Correct {this.getScore(correctAnswers, quizLength)}</Text>
                         <Text style={correctAnswers === quizLength?styles.goodJob:styles.studyMore}>{correctAnswers === quizLength?'Good Job!':'Need to Study!'}</Text>
                         <TouchableOpacity style={styles.btn} onPress={() => {this.setState({quizQuestion: 0, correctAnswers: 0})}}>
                             <Text style={styles.btnText}>Re-Start Quiz</Text>
