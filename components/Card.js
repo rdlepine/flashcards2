@@ -23,7 +23,19 @@ class Card extends Component {
     }
 
     addQuestion =  () => {
+ 
+
+
         const {question, answer } = this.state;
+
+        let q = question.trim();
+        let a = answer.trim();
+
+        if(a.length == 0 || q.length == 0) {
+            Alert.alert("Question and Answer required");
+            return;
+        }
+
         const cardKey = this.props.cardKey;
         const { navigate } = this.props.navigation;  
         
